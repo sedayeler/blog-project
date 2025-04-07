@@ -1,15 +1,15 @@
 ﻿using BlogProject.Domain.Entities.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlogProject.Domain.Entities
+namespace BlogProject.Application.Repositories
 {
-    public class Category : BaseEntity
+    public interface IRepository<T> where T : BaseEntity
     {
-        public string Name { get; set; }
-        public ICollection<BlogPost> BlogPosts { get; set; }
+        DbSet<T> Table { get; }
     }
 }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Domain.Entities.Common
 {
-    class BaseEntity
+    public abstract class BaseEntity
     {
+        public Guid Id { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }
