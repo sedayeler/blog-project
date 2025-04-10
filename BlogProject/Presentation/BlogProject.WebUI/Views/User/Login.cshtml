@@ -1,0 +1,77 @@
+﻿@using BlogProject.WebUI.Models.User
+@model LoginViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Giriş Yap";
+}
+
+@section Styles {
+    <style>
+        .auth-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            padding: 40px 0;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-purple {
+            background-color: #6f42c1;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-purple:hover {
+                background-color: #59359c;
+                color: #fff;
+            }
+    </style>
+}
+
+<div class="container auth-wrapper">
+    <div class="auth-card">
+        <h2 class="card-title">Giriş Yap</h2>
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <form asp-controller="User" asp-action="Login" method="post" novalidate>
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label">E-posta</label>
+                <input asp-for="Email" class="form-control" placeholder="ornek@mail.com" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label">Şifre</label>
+                <input asp-for="Password" class="form-control" placeholder="Şifrenizi giriniz" />
+                <span asp-validation-for="Password" class="text-danger small"></span>
+            </div>
+
+            <button type="submit" class="btn btn-purple w-100">Giriş Yap</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

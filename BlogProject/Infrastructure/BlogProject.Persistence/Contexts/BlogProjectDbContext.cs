@@ -2,11 +2,6 @@
 using BlogProject.Domain.Entities.Common;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlogProject.Persistence.Contexts
 {
@@ -16,7 +11,7 @@ namespace BlogProject.Persistence.Contexts
         {
         }
 
-        public DbSet<BlogPost> blog_posts { get; set; }
+        public DbSet<Post> posts { get; set; }
         public DbSet<Category> categories { get; set; }
         public DbSet<Comment> comments { get; set; }
 

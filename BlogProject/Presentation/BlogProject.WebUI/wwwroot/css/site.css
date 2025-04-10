@@ -1,0 +1,69 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.btn-kayit-ol {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-kayit-ol:hover {
+        background-color: #59359c;
+        color: white;
+    }
+
+
+.btn-giris-yap {
+    background-color: transparent;
+    color: #6f42c1;
+    border: 2px solid #6f42c1;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+    .btn-giris-yap:hover {
+        background-color: #6f42c1;
+        color: white;
+    }
+
+
+.btn-gonderi-yayinla {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+    .btn-gonderi-yayinla:hover {
+        background-color: #59359c;
+        color: white;
+    }

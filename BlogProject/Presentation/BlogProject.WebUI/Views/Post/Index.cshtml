@@ -1,0 +1,37 @@
+﻿@using BlogProject.Application.Features.Queries.Post.GetAllPosts
+
+@model List<GetAllPostsQueryResponse>
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="container py-5">
+    <h2 class="text-center mb-5">Son Blog Yazıları</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var post in Model)
+            {
+                <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                    <div class="card shadow-sm">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@post.Title</h5>
+                            <p class="card-text text-truncate">@post.Content</p>
+                            <div class="mt-auto">
+                                <a href="#" class="btn btn-outline-primary w-100" disabled>Detaylar (yakında)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            Henüz hiç yazı paylaşılmamış. İlk yazıyı sen ekle!
+        </div>
+    }
+</div>
