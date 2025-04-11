@@ -2,6 +2,7 @@
 using BlogProject.Application.DTOs;
 using BlogProject.Application.Repositories;
 using BlogProject.Domain.Entities;
+using BlogProject.Persistence.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -14,13 +15,15 @@ namespace BlogProject.Persistence.Services
         private readonly IPostReadRepository _postReadRepository;
         private readonly IPostWriteRepository _postWriteRepository;
         private readonly UserManager<User> _userManager;
+        private readonly BlogProjectDbContext _context;
 
-        public PostService(IHttpContextAccessor httpContextAccessor, IPostReadRepository postReadRepository, IPostWriteRepository postWriteRepository, UserManager<User> userManager)
+        public PostService(IHttpContextAccessor httpContextAccessor, IPostReadRepository postReadRepository, IPostWriteRepository postWriteRepository, UserManager<User> userManager, BlogProjectDbContext context)
         {
             _httpContextAccessor = httpContextAccessor;
             _postReadRepository = postReadRepository;
             _postWriteRepository = postWriteRepository;
             _userManager = userManager;
+            _context = context;
         }
 
         public async Task CreatePostAsync(CreatePostDto dto)
@@ -50,7 +53,7 @@ namespace BlogProject.Persistence.Services
         {
             Post post = await _postReadRepository.GetByIdAsync(dto.Id);
             if (post == null)
-                throw new Exception("Post not found.");
+                throw new Exception("Gönderi bulunamadı.");
 
             post.Title = dto.Title;
             post.Content = dto.Content;
@@ -65,7 +68,7 @@ namespace BlogProject.Persistence.Services
         {
             Post post = await _postReadRepository.GetByIdAsync(id);
             if (post == null)
-                throw new Exception("Post not found.");
+                throw new Exception("Gönderi bulunamadı.");
 
             _postWriteRepository.Remove(post);
             await _postWriteRepository.SaveAsync();
@@ -78,17 +81,18 @@ namespace BlogProject.Persistence.Services
                 .Include(p => p.Category)
                 .ToListAsync();
 
-            List<ListPostDto> postDtos = posts.Select(p => new ListPostDto
+            List<ListPostDto> postDtos = posts.Select(p => new ListPostDto()
             {
                 Id = p.Id,
                 CreatedAt = p.CreatedAt,
                 Title = p.Title,
-                Content = p.Content != null && p.Content.Length > 100
-                    ? p.Content.Substring(0, 100) + "..."
-                    : p.Content,
+                Content = p.Content,
                 ImagePath = p.ImagePath,
+                AuthorId = p.User.Id,
                 AuthorName = p.User.FullName,
-                CategoryName = p.Category.Name
+                //CategoryId = p.CategoryId,
+                //CategoryName = p.Category.Name
+                Category = p.Category
             }).ToList();
 
             return postDtos;
@@ -96,9 +100,12 @@ namespace BlogProject.Persistence.Services
 
         public async Task<ListPostDto> GetByIdPostAsync(Guid id)
         {
-            Post post = await _postReadRepository.GetByIdAsync(id);
+            var post = await _context.posts
+                .Include(p => p.User)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == id);
             if (post == null)
-                throw new Exception("Post not found.");
+                throw new Exception("Gönderi bulunamadı.");
 
             ListPostDto postDto = new ListPostDto()
             {
@@ -107,8 +114,9 @@ namespace BlogProject.Persistence.Services
                 Title = post.Title,
                 Content = post.Content,
                 ImagePath = post.ImagePath,
+                AuthorId = post.UserId,
                 AuthorName = post.User.FullName,
-                CategoryName = post.Category.Name,
+                Category = post.Category
             };
 
             return postDto;

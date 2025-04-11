@@ -1,0 +1,73 @@
+﻿@model BlogProject.WebUI.Models.Post.ListPostViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-12">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h1 class="fw-bold mb-0">@Model.Title</h1>
+
+                @if (ViewBag.IsAuthor == true)
+                {
+                    <div class="d-flex flex-column">
+                        <a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-duzenle mb-2">
+                            <i class="bi bi-pencil-square"></i> Düzenle
+                        </a>
+
+                        <button type="button" class="btn btn-sil" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                            <i class="bi bi-trash"></i> Sil
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <p class="text-muted">
+                <strong>@Model.AuthorName</strong> · @Model.CreatedAt.ToString("dd MMMM yyyy") · @Model.CategoryName
+            </p>
+
+            <hr />
+
+            @if (!string.IsNullOrEmpty(Model.ImagePath))
+            {
+                <div class="text-center mb-4">
+                    <img src="@Url.Content(Model.ImagePath)" alt="Gönderi görseli" class="img-fluid rounded" />
+                </div>
+            }
+
+            <div class="fs-5" style="line-height: 1.8;">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header bg-purple text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Gönderiyi Sil</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+
+            <div class="modal-body">
+                Bu gönderiyi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Vazgeç</button>
+
+                <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-purple">Evet, Sil</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+

@@ -67,3 +67,18 @@ body {
         background-color: #59359c;
         color: white;
     }
+
+.bg-purple {
+    background-color: #6f42c1 !important; 
+}
+
+.btn-purple {
+    background-color: #6f42c1;
+    color: white;
+    border: none;
+}
+
+    .btn-purple:hover {
+        background-color: #59359c;
+        color: white;
+    }

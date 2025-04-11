@@ -8,7 +8,7 @@ namespace BlogProject.WebUI.Models.User
         [EmailAddress(ErrorMessage = "Lütfen geçerli bir e-posta adresi giriniz.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Şifre girilmelidir.")]
+        [Required(ErrorMessage = "Şifre gereklidir.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
     }

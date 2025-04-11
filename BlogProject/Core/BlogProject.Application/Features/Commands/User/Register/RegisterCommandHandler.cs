@@ -23,7 +23,7 @@ namespace BlogProject.Application.Features.Commands.User.Register
                 Password = request.Password
             });
 
-            return new()
+            return new RegisterCommandResponse()
             {
                 Succeeded = response.Succeeded,
                 Message = response.Message

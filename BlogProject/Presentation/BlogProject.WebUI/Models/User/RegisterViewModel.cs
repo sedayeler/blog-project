@@ -15,7 +15,7 @@ namespace BlogProject.WebUI.Models.User
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Bir şifre belirlemelisiniz.")]
-        [StringLength(100, MinimumLength = 6, ErrorMessage = "Şifreniz en az 6 karakter olmalıdır.")]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Şifreniz en az 6 karakter olmalıdır.")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$",
         ErrorMessage = "Şifreniz en az bir küçük harf, bir büyük harf ve bir rakam içermelidir.")]
         [DataType(DataType.Password)]

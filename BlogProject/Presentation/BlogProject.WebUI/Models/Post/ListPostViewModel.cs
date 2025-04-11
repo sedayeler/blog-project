@@ -1,6 +1,6 @@
-﻿namespace BlogProject.Application.Features.Queries.Post.GetAllPosts
+﻿namespace BlogProject.WebUI.Models.Post
 {
-    public class GetAllPostsQueryResponse
+    public class ListPostViewModel
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -9,8 +9,7 @@
         public string? ImagePath { get; set; }
         public Guid AuthorId { get; set; }
         public string AuthorName { get; set; }
-        //public Guid CategoryId { get; set; }
-        //public string CategoryName { get; set; }
-        public BlogProject.Domain.Entities.Category Category { get; set; }
+        public Guid CategoryId { get; set; }
+        public string CategoryName { get; set; }
     }
 }

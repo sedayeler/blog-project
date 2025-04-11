@@ -30,7 +30,6 @@ namespace BlogProject.Persistence.Services
 
             User user = new User()
             {
-                Id = Guid.NewGuid(),
                 FullName = request.FullName,
                 UserName = request.Username,
                 Email = request.Email
@@ -38,12 +37,13 @@ namespace BlogProject.Persistence.Services
 
             IdentityResult result = await _userManager.CreateAsync(user, request.Password);
 
-            RegisterResponse response = new() { Succeeded = result.Succeeded };
+            RegisterResponse response = new RegisterResponse() { Succeeded = result.Succeeded };
 
             if (result.Succeeded)
                 response.Message = "Kayıt işlemi başarıyla tamamlandı.";
             else
                 response.Message = string.Join(" ", result.Errors.Select(e => e.Description));
+            //response.Message = string.Join("<br>", result.Errors.Select(e => e.Description));
 
             return response;
         }
@@ -52,11 +52,16 @@ namespace BlogProject.Persistence.Services
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
-                throw new Exception("Email or password is incorrect.");
+                throw new Exception("E-posta ya da şifre hatalı.");
 
             SignInResult result = await _signInManager.PasswordSignInAsync(user, password, isPersistent: false, lockoutOnFailure: false);
 
             return result.Succeeded;
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }

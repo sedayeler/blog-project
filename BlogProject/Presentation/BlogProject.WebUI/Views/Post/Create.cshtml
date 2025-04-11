@@ -5,83 +5,48 @@
     ViewData["Title"] = "Gönderi Yayınla";
 }
 
-@section Styles {
-    <style>
-        .post-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: calc(100vh - 80px);
-            padding: 40px 0;
-        }
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10 col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title text-center fw-bold mb-4">Gönderi Oluştur</h2>
 
-        .post-card {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 700px;
-        }
+                    <form asp-action="Create" method="post">
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Başlık</label>
+                            <input asp-for="Title" class="form-control" placeholder="Başlık giriniz" />
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
 
-        .card-title {
-            font-weight: bold;
-            font-size: 24px;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label">İçerik</label>
+                            <textarea asp-for="Content" class="form-control" rows="8" placeholder="İçerik yazınız"></textarea>
+                            <span asp-validation-for="Content" class="text-danger small"></span>
+                        </div>
 
-        .btn-purple {
-            background-color: #6f42c1;
-            color: #fff;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
+                        <div class="mb-3">
+                            <label asp-for="ImagePath" class="form-label">Resim</label>
+                            <input asp-for="ImagePath" class="form-control" placeholder="Resim dosya yolu (isteğe bağlı)" />
+                            <span asp-validation-for="ImagePath" class="text-danger small"></span>
+                        </div>
 
-            .btn-purple:hover {
-                background-color: #59359c;
-                color: #fff;
-            }
-    </style>
-}
+                        <div class="mb-4">
+                            <label asp-for="CategoryId" class="form-label">Kategori</label>
+                            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
+                                <option value="">Kategori seçiniz</option>
+                            </select>
+                            <span asp-validation-for="CategoryId" class="text-danger small"></span>
+                        </div>
 
-<div class="post-wrapper">
-    <div class="post-card">
-        <h2 class="card-title">Gönderi Oluştur</h2>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-purple">Yayınla</button>
+                        </div>
+                    </form>
 
-        <form asp-action="Create" method="post">
-            <div class="mb-3">
-                <label asp-for="Title" class="form-label">Başlık</label>
-                <input asp-for="Title" class="form-control" placeholder="Başlık giriniz" />
-                <span asp-validation-for="Title" class="text-danger small"></span>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label asp-for="Content" class="form-label">İçerik</label>
-                <textarea asp-for="Content" class="form-control" rows="8" placeholder="İçerik yazınız"></textarea>
-                <span asp-validation-for="Content" class="text-danger small"></span>
-            </div>
-
-            <div class="mb-3">
-                <label asp-for="ImagePath" class="form-label">Resim</label>
-                <input asp-for="ImagePath" class="form-control" placeholder="Resim dosya yolu (isteğe bağlı)" />
-                <span asp-validation-for="ImagePath" class="text-danger small"></span>
-            </div>
-
-            <div class="mb-4">
-                <label asp-for="CategoryId" class="form-label">Kategori</label>
-                <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
-                    <option value="">Kategori seçiniz</option>
-                </select>
-                <span asp-validation-for="CategoryId" class="text-danger small"></span>
-            </div>
-
-            <div class="d-grid">
-                <button type="submit" class="btn btn-purple">Yayınla</button>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 

@@ -22,8 +22,11 @@ namespace BlogProject.Application.Features.Queries.Post.GetAllPosts
                 Title = p.Title,
                 Content = p.Content,
                 ImagePath = p.ImagePath,
+                AuthorId = p.AuthorId,
                 AuthorName = p.AuthorName,
-                CategoryName = p.CategoryName
+                //CategoryId = p.Category.Id,
+                //CategoryName = p.Category.Id
+                Category = p.Category
             }).ToList();
         }
     }

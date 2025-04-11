@@ -1,4 +1,5 @@
 ﻿using BlogProject.Application.Features.Commands.User.Login;
+using BlogProject.Application.Features.Commands.User.Logout;
 using BlogProject.Application.Features.Commands.User.Register;
 using BlogProject.WebUI.Models.User;
 using MediatR;
@@ -57,7 +58,7 @@ namespace BlogProject.WebUI.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            LoginCommandRequest request = new LoginCommandRequest
+            LoginCommandRequest request = new LoginCommandRequest()
             {
                 Email = model.Email,
                 Password = model.Password
@@ -67,12 +68,21 @@ namespace BlogProject.WebUI.Controllers
 
             if (response.Succeeded)
             {
-                TempData["Success"] = "Login successful.";
+                TempData["Success"] = "Giriş başarılı..";
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", "Email or password is incorrect.");
+            ModelState.AddModelError("", "E-posta ya da şifre hatalı.");
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _mediator.Send(new LogoutCommandRequest());
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
