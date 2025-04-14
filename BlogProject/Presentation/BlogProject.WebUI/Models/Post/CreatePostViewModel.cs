@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using BlogProject.WebUI.Attributes;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlogProject.WebUI.Models.Post
@@ -13,9 +14,8 @@ namespace BlogProject.WebUI.Models.Post
 
         public string? ImagePath { get; set; }
 
-        [Required(ErrorMessage = "Lütfen bir kategori seçiniz.")]
+        [RequiredGuid(ErrorMessage = "Lütfen bir kategori seçiniz.")]
         public Guid CategoryId { get; set; }
-
         public List<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
     }
 }

@@ -3,6 +3,7 @@ using BlogProject.Application.DTOs;
 using BlogProject.Application.DTOs.Comment;
 using BlogProject.Application.Repositories;
 using BlogProject.Domain.Entities;
+using BlogProject.Domain.Entities.Identity;
 using BlogProject.Persistence.Contexts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -18,8 +19,9 @@ namespace BlogProject.Persistence.Services
         private readonly UserManager<User> _userManager;
         private readonly BlogProjectDbContext _context;
         private readonly IAiService _aiService;
+        private readonly IMailService _mailService;
 
-        public PostService(IHttpContextAccessor httpContextAccessor, IPostReadRepository postReadRepository, IPostWriteRepository postWriteRepository, UserManager<User> userManager, BlogProjectDbContext context, IAiService aiService)
+        public PostService(IHttpContextAccessor httpContextAccessor, IPostReadRepository postReadRepository, IPostWriteRepository postWriteRepository, UserManager<User> userManager, BlogProjectDbContext context, IAiService aiService, IMailService mailService)
         {
             _httpContextAccessor = httpContextAccessor;
             _postReadRepository = postReadRepository;
@@ -27,6 +29,7 @@ namespace BlogProject.Persistence.Services
             _userManager = userManager;
             _context = context;
             _aiService = aiService;
+            _mailService = mailService;
         }
 
         public async Task CreatePostAsync(CreatePostDto dto)

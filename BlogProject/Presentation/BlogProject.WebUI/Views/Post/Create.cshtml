@@ -1,5 +1,4 @@
-﻿@using BlogProject.WebUI.Models.Post
-@model CreatePostViewModel
+﻿@model BlogProject.WebUI.Models.Post.CreatePostViewModel
 
 @{
     ViewData["Title"] = "Gönderi Yayınla";
@@ -34,9 +33,7 @@
 
                         <div class="mb-4">
                             <label asp-for="CategoryId" class="form-label">Kategori</label>
-                            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
-                                <option value="">Kategori seçiniz</option>
-                            </select>
+                            <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select"></select>
                             <span asp-validation-for="CategoryId" class="text-danger small"></span>
                         </div>
 

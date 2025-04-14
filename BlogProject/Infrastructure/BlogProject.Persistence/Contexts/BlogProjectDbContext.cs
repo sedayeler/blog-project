@@ -1,5 +1,6 @@
 ﻿using BlogProject.Domain.Entities;
 using BlogProject.Domain.Entities.Common;
+using BlogProject.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

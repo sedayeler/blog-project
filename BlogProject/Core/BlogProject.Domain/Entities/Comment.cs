@@ -1,4 +1,5 @@
 ﻿using BlogProject.Domain.Entities.Common;
+using BlogProject.Domain.Entities.Identity;
 
 namespace BlogProject.Domain.Entities
 {

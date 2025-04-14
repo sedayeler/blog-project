@@ -28,45 +28,53 @@ namespace BlogProject.WebUI.Controllers
             return View();
         }
 
-        private async Task PopulateCategoriesAsync(CreatePostViewModel viewModel)
+        private async Task LoadCategoriesAsync(CreatePostViewModel model)
         {
             var categories = await _mediator.Send(new GetAllCategoriesQueryRequest());
 
-            viewModel.Categories = categories
-                .Select(c => new SelectListItem
+            var items = categories
+                .Select(c => new SelectListItem()
                 {
                     Value = c.Id.ToString(),
                     Text = c.Name
                 })
                 .OrderBy(s => s.Text)
                 .ToList();
+
+            items.Insert(0, new SelectListItem()
+            {
+                Value = Guid.Empty.ToString(),
+                Text = "Kategori seçiniz"
+            });
+
+            model.Categories = items;
         }
 
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            CreatePostViewModel viewModel = new CreatePostViewModel();
-            await PopulateCategoriesAsync(viewModel);
+            CreatePostViewModel model = new CreatePostViewModel();
+            await LoadCategoriesAsync(model);
 
-            return View(viewModel);
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreatePostViewModel viewModel)
+        public async Task<IActionResult> Create(CreatePostViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                await PopulateCategoriesAsync(viewModel);
+                await LoadCategoriesAsync(model);
 
-                return View(viewModel);
+                return View(model);
             }
 
             CreatePostCommandRequest request = new CreatePostCommandRequest()
             {
-                Title = viewModel.Title,
-                Content = viewModel.Content,
-                ImagePath = viewModel.ImagePath,
-                CategoryId = viewModel.CategoryId
+                Title = model.Title,
+                Content = model.Content,
+                ImagePath = model.ImagePath,
+                CategoryId = model.CategoryId
             };
 
             await _mediator.Send(request);

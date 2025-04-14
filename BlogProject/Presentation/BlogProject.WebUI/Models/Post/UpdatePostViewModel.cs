@@ -17,7 +17,6 @@ namespace BlogProject.WebUI.Models.Post
 
         [Required(ErrorMessage = "Lütfen bir kategori seçiniz.")]
         public Guid CategoryId { get; set; }
-
         public List<SelectListItem> Categories { get; set; } = new List<SelectListItem>();
     }
 }

@@ -1,5 +1,6 @@
-using BlogProject.Persistence;
 using BlogProject.Application;
+using BlogProject.Persistence;
+using BlogProject.Infrastructure;
 using BlogProject.Persistence.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
+builder.Services.AddInfrastructureServices();
 
 var app = builder.Build();
 

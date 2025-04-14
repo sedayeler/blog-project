@@ -2,6 +2,7 @@
 using BlogProject.Application.DTOs.Comment;
 using BlogProject.Application.Repositories;
 using BlogProject.Domain.Entities;
+using BlogProject.Domain.Entities.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 

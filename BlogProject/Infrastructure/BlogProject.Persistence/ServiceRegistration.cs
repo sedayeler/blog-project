@@ -1,6 +1,6 @@
 ﻿using BlogProject.Application.Abstractions.Services;
 using BlogProject.Application.Repositories;
-using BlogProject.Domain.Entities;
+using BlogProject.Domain.Entities.Identity;
 using BlogProject.Persistence.Contexts;
 using BlogProject.Persistence.Repositories;
 using BlogProject.Persistence.Services;
