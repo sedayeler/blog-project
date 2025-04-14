@@ -1,9 +1,11 @@
 ﻿using BlogProject.Application.Features.Commands.Post.CreatePost;
 using BlogProject.Application.Features.Commands.Post.DeletePost;
+using BlogProject.Application.Features.Commands.Post.SummarizePost;
 using BlogProject.Application.Features.Commands.Post.UpdatePost;
 using BlogProject.Application.Features.Queries.Category.GetAllCategories;
-using BlogProject.Application.Features.Queries.Post.GetAllPosts;
 using BlogProject.Application.Features.Queries.Post.GetByIdPost;
+using BlogProject.Application.Features.Queries.Post.GetPostsByCategoryId;
+using BlogProject.WebUI.Models.Comment;
 using BlogProject.WebUI.Models.Post;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,24 +23,9 @@ namespace BlogProject.WebUI.Controllers
             _mediator = mediator;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            List<GetAllPostsQueryResponse> response = await _mediator.Send(new GetAllPostsQueryRequest());
-
-            List<ListPostViewModel> viewModel = response.Select(post => new ListPostViewModel
-            {
-                Id = post.Id,
-                CreatedAt = post.CreatedAt,
-                Title = post.Title,
-                Content = post.Content.Length > 100 ? post.Content.Substring(0, 100) + "..." : post.Content,
-                ImagePath = post.ImagePath,
-                AuthorId = post.AuthorId,
-                AuthorName = post.AuthorName,
-                CategoryId = post.Category.Id,
-                CategoryName = post.Category.Name
-            }).ToList();
-
-            return View(viewModel);
+            return View();
         }
 
         private async Task PopulateCategoriesAsync(CreatePostViewModel viewModel)
@@ -90,32 +77,47 @@ namespace BlogProject.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var response = await _mediator.Send(new GetByIdPostRequest { Id = id });
+            var response = await _mediator.Send(new GetByIdPostRequest() { Id = id });
 
-            ListPostViewModel viewModel = new ListPostViewModel()
+            var commentsModel = response.Comments.Select(c => new ListCommentViewModel()
+            {
+                Id = c.Id,
+                CreatedAt = c.CreatedAt,
+                Content = c.Content,
+                UserId = c.UserId,
+                Username = c.Username
+            }).ToList();
+
+            ListPostViewModel model = new ListPostViewModel()
             {
                 Id = response.Id,
                 CreatedAt = response.CreatedAt,
                 Title = response.Title,
                 Content = response.Content,
                 ImagePath = response.ImagePath,
-                AuthorId = response.AuthorId,
-                AuthorName = response.AuthorName,
+                AuthorId = response.UserId,
+                AuthorName = response.UserName,
                 CategoryId = response.CategoryId,
-                CategoryName = response.CategoryName
+                CategoryName = response.CategoryName,
+                NewComment = new CreateCommentViewModel()
+                {
+                    PostId = response.Id
+                },
+                Comments = commentsModel ?? new List<ListCommentViewModel>()
             };
 
-            ViewBag.IsAuthor = false;
+            Guid? currentUserId = null;
 
             if (User.Identity.IsAuthenticated)
             {
                 var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                if (Guid.TryParse(userIdString, out var currentUserId))
-                    ViewBag.IsAuthor = currentUserId == response.AuthorId;
+                if (Guid.TryParse(userIdString, out var parsedId))
+                    currentUserId = parsedId;
             }
 
-            return View(viewModel);
+            ViewBag.CurrentUserId = currentUserId;
+
+            return View(model);
         }
 
         [HttpGet]
@@ -167,6 +169,41 @@ namespace BlogProject.WebUI.Controllers
             await _mediator.Send(new DeletePostCommandRequest() { Id = id });
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("category/{categoryId}")]
+        public async Task<IActionResult> Category(Guid categoryId)
+        {
+            var posts = await _mediator.Send(new GetPostsByCategoryIdQueryRequest() { CategoryId = categoryId });
+
+            List<ListPostViewModel> model = posts
+            .Select(p => new ListPostViewModel()
+            {
+                Id = p.Id,
+                CreatedAt = p.CreatedAt,
+                Title = p.Title,
+                Content = p.Content.Length > 200 ? p.Content.Substring(0, 200) + "..." : p.Content,
+                ImagePath = p.ImagePath,
+                AuthorId = p.UserId,
+                AuthorName = p.UserFullName,
+                CategoryId = p.CategoryId,
+                CategoryName = p.CategoryName
+            }).ToList();
+
+            if (model.Any())
+                ViewBag.CategoryName = model.First().CategoryName;
+            else
+                ViewBag.CategoryName = "Gönderiler";
+
+            return View("~/Views/Home/Index.cshtml", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SummarizeWithAI([FromBody] SummarizePostCommandRequest request)
+        {
+            var result = await _mediator.Send(request);
+
+            return Json(new { summary = result.Summary });
         }
     }
 }

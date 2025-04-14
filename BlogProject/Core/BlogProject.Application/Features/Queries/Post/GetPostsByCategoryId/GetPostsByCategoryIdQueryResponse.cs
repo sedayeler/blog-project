@@ -1,8 +1,6 @@
-﻿using BlogProject.Application.DTOs.Comment;
-
-namespace BlogProject.Application.DTOs
+﻿namespace BlogProject.Application.Features.Queries.Post.GetPostsByCategoryId
 {
-    public class ListPostDto
+    public class GetPostsByCategoryIdQueryResponse
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }
@@ -13,6 +11,5 @@ namespace BlogProject.Application.DTOs
         public string UserFullName { get; set; }
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public List<ListCommentDto> Comments { get; set; }
     }
 }

@@ -4,14 +4,14 @@ namespace BlogProject.WebUI.Models.User
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Lütfen adınızı ve soyadınızı giriniz.")]
+        [Required(ErrorMessage = "Adınızı ve soyadınızı giriniz.")]
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "Kullanıcı adı alanı boş bırakılamaz.")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "E-posta adresi gereklidir.")]
-        [EmailAddress(ErrorMessage = "Lütfen geçerli bir e-posta adresi giriniz.")]
+        [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Bir şifre belirlemelisiniz.")]

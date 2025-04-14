@@ -1,4 +1,6 @@
-﻿namespace BlogProject.WebUI.Models.Post
+﻿using BlogProject.WebUI.Models.Comment;
+
+namespace BlogProject.WebUI.Models.Post
 {
     public class ListPostViewModel
     {
@@ -11,5 +13,7 @@
         public string AuthorName { get; set; }
         public Guid CategoryId { get; set; }
         public string CategoryName { get; set; }
+        public CreateCommentViewModel NewComment { get; set; }
+        public List<ListCommentViewModel> Comments { get; set; }
     }
 }

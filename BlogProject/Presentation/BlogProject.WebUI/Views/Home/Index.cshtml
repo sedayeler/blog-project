@@ -1,8 +1,47 @@
-﻿@* @{
-    ViewData["Title"] = "Home Page";
+﻿@model List<BlogProject.WebUI.Models.Post.ListPostViewModel>
+
+@{
+    ViewData["Title"] = ViewBag.CategoryName ?? "Ana Sayfa";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div> *@
+<h2 class="text-center fw-semibold mb-4">Gönderiler</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center">
+                <div class="alert alert-dark fw-semibold">
+                    Bu kategoriye ait gönderi bulunamadı.
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var post in Model)
+            {
+                <div class="col-12 col-md-10 col-lg-8 mb-4">
+                    <div class="card shadow-sm p-3">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">@post.Title</h4>
+                            <p class="text-muted mb-2">
+                                <small>
+                                    Yazar: @post.AuthorName |
+                                    Yayınlanma Tarihi: @post.CreatedAt.ToString("dd MMMM yyyy") |
+                                    Kategori: @post.CategoryName
+                                </small>
+                            </p>
+                            <p class="card-text fs-6">@post.Content</p>
+                            <a href="@Url.Action("Details", "Post", new { id = post.Id })"
+                               class="btn btn-purple px-3 py-2">
+                                Devamını Oku
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+

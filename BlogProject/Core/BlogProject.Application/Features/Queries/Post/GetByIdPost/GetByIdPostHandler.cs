@@ -23,10 +23,11 @@ namespace BlogProject.Application.Features.Queries.Post.GetByIdPost
                 Title = post.Title,
                 Content = post.Content,
                 ImagePath = post.ImagePath,
-                AuthorId = post.AuthorId,
-                AuthorName = post.AuthorName,
-                CategoryId = post.Category.Id,
-                CategoryName = post.Category.Name
+                UserId = post.UserId,
+                UserName = post.UserFullName,
+                CategoryId = post.CategoryId,
+                CategoryName = post.CategoryName,
+                Comments = post.Comments
             };
         }
     }

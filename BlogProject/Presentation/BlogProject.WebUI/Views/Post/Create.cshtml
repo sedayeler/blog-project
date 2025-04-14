@@ -5,29 +5,30 @@
     ViewData["Title"] = "Gönderi Yayınla";
 }
 
-<div class="container my-5">
+<div class="container my-4">
     <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10 col-12">
+        <div class="col-lg-7 col-md-9 col-12">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h2 class="card-title text-center fw-bold mb-4">Gönderi Oluştur</h2>
+                <div class="card-body p-4">
+                    <h2 class="text-center fw-semibold mb-4">Gönderi Oluştur</h2>
 
                     <form asp-action="Create" method="post">
                         <div class="mb-3">
                             <label asp-for="Title" class="form-label">Başlık</label>
-                            <input asp-for="Title" class="form-control" placeholder="Başlık giriniz" />
+                            <input asp-for="Title" class="form-control" />
                             <span asp-validation-for="Title" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="Content" class="form-label">İçerik</label>
-                            <textarea asp-for="Content" class="form-control" rows="8" placeholder="İçerik yazınız"></textarea>
+                            <textarea asp-for="Content" class="form-control" rows="8"></textarea>
                             <span asp-validation-for="Content" class="text-danger small"></span>
                         </div>
 
                         <div class="mb-3">
                             <label asp-for="ImagePath" class="form-label">Resim</label>
-                            <input asp-for="ImagePath" class="form-control" placeholder="Resim dosya yolu (isteğe bağlı)" />
+                            <input asp-for="ImagePath" class="form-control"
+                                   placeholder="Örn: /images/gonderi1.jpg (isteğe bağlı)" />
                             <span asp-validation-for="ImagePath" class="text-danger small"></span>
                         </div>
 

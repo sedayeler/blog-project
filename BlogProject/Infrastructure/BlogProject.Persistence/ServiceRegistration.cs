@@ -32,7 +32,7 @@ namespace BlogProject.Persistence
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(15);
-                options.LoginPath = "/User/Login";
+                options.LoginPath = "/user/login";
                 //options.AccessDeniedPath = "/User/AccessDenied";
                 options.SlidingExpiration = true;
             });
@@ -49,6 +49,9 @@ namespace BlogProject.Persistence
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IAiService, AiService>();
+            services.AddHttpClient<IAiService, AiService>();
         }
     }
 }

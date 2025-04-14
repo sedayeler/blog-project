@@ -6,29 +6,29 @@
     ViewData["Title"] = "Kayıt Ol";
 }
 
-<div class="container mt-4">
+<div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-sm-10 col-md-6 col-lg-5 col-xl-4">
-            <div class="card p-4 shadow-sm">
+            <div class="card py-4 px-4 shadow-sm">
                 <h2 class="text-center fw-bold mb-4">Kayıt Ol</h2>
 
                 <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                 <form asp-controller="User" asp-action="Register" method="post" novalidate>
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label asp-for="FullName" class="form-label">Ad Soyad</label>
                         <input asp-for="FullName" class="form-control" />
                         <span asp-validation-for="FullName" class="text-danger small"></span>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-2">
                         <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
                         <input asp-for="Username" class="form-control" />
                         <span asp-validation-for="Username" class="text-danger small"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label">E-posta Adresi</label>
+                    <div class="mb-2">
+                        <label asp-for="Email" class="form-label">E-posta</label>
                         <input asp-for="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>

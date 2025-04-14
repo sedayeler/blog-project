@@ -9,5 +9,7 @@ namespace BlogProject.Application.Abstractions.Services
         Task DeletePostAsync(Guid id);
         Task<List<ListPostDto>> GetAllPostsAsync();
         Task<ListPostDto> GetByIdPostAsync(Guid id);
+        Task<List<ListPostDto>> GetPostsByCategoryIdAsync(Guid categoryId);
+        Task<string> SummarizePostAsync(Guid id);
     }
 }

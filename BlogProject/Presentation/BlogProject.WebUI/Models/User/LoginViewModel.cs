@@ -5,7 +5,7 @@ namespace BlogProject.WebUI.Models.User
     public class LoginViewModel
     {
         [Required(ErrorMessage = "E-posta adresi gereklidir.")]
-        [EmailAddress(ErrorMessage = "Lütfen geçerli bir e-posta adresi giriniz.")]
+        [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Şifre gereklidir.")]

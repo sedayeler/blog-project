@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BlogProject.Application.DTOs.Comment;
 
 namespace BlogProject.Application.Abstractions.Services
 {
-    interface ICommentService
+    public interface ICommentService
     {
+        Task CreateCommentAsync(CreateCommentDto dto);
+        Task DeleteCommentAsync(Guid id);
     }
 }

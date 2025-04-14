@@ -1,5 +1,6 @@
 ﻿using BlogProject.Application.Abstractions.Services;
 using BlogProject.Application.DTOs;
+using BlogProject.Application.DTOs.Comment;
 using BlogProject.Application.Repositories;
 using BlogProject.Domain.Entities;
 using BlogProject.Persistence.Contexts;
@@ -16,14 +17,16 @@ namespace BlogProject.Persistence.Services
         private readonly IPostWriteRepository _postWriteRepository;
         private readonly UserManager<User> _userManager;
         private readonly BlogProjectDbContext _context;
+        private readonly IAiService _aiService;
 
-        public PostService(IHttpContextAccessor httpContextAccessor, IPostReadRepository postReadRepository, IPostWriteRepository postWriteRepository, UserManager<User> userManager, BlogProjectDbContext context)
+        public PostService(IHttpContextAccessor httpContextAccessor, IPostReadRepository postReadRepository, IPostWriteRepository postWriteRepository, UserManager<User> userManager, BlogProjectDbContext context, IAiService aiService)
         {
             _httpContextAccessor = httpContextAccessor;
             _postReadRepository = postReadRepository;
             _postWriteRepository = postWriteRepository;
             _userManager = userManager;
             _context = context;
+            _aiService = aiService;
         }
 
         public async Task CreatePostAsync(CreatePostDto dto)
@@ -88,11 +91,10 @@ namespace BlogProject.Persistence.Services
                 Title = p.Title,
                 Content = p.Content,
                 ImagePath = p.ImagePath,
-                AuthorId = p.User.Id,
-                AuthorName = p.User.FullName,
-                //CategoryId = p.CategoryId,
-                //CategoryName = p.Category.Name
-                Category = p.Category
+                UserId = p.User.Id,
+                UserFullName = p.User.FullName,
+                CategoryId = p.CategoryId,
+                CategoryName = p.Category.Name
             }).ToList();
 
             return postDtos;
@@ -103,9 +105,22 @@ namespace BlogProject.Persistence.Services
             var post = await _context.posts
                 .Include(p => p.User)
                 .Include(p => p.Category)
+                .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(p => p.Id == id);
             if (post == null)
                 throw new Exception("Gönderi bulunamadı.");
+
+            var commentDtos = post.Comments
+                .OrderByDescending(c => c.CreatedAt)
+                .Select(c => new ListCommentDto()
+                {
+                    Id = c.Id,
+                    CreatedAt = c.CreatedAt,
+                    Content = c.Content,
+                    UserId = c.UserId,
+                    Username = c.User.UserName,
+                }).ToList();
 
             ListPostDto postDto = new ListPostDto()
             {
@@ -114,12 +129,51 @@ namespace BlogProject.Persistence.Services
                 Title = post.Title,
                 Content = post.Content,
                 ImagePath = post.ImagePath,
-                AuthorId = post.UserId,
-                AuthorName = post.User.FullName,
-                Category = post.Category
+                UserId = post.UserId,
+                UserFullName = post.User.FullName,
+                CategoryId = post.CategoryId,
+                CategoryName = post.Category.Name,
+                Comments = commentDtos
             };
 
             return postDto;
+        }
+
+        public async Task<List<ListPostDto>> GetPostsByCategoryIdAsync(Guid categoryId)
+        {
+            var posts = await _context.posts
+                .Where(p => p.CategoryId == categoryId)
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .OrderByDescending(p => p.CreatedAt)
+                .ToListAsync();
+            if (posts == null)
+                throw new Exception("Gönderi bulunamadı.");
+
+            return posts.Select(p => new ListPostDto()
+            {
+                Id = p.Id,
+                CreatedAt = p.CreatedAt,
+                Title = p.Title,
+                Content = p.Content,
+                ImagePath = p.ImagePath,
+                UserId = p.UserId,
+                UserFullName = p.User.FullName,
+                CategoryId = p.CategoryId,
+                CategoryName = p.Category.Name
+            }).ToList();
+        }
+
+        public async Task<string> SummarizePostAsync(Guid id)
+        {
+            var post = await _postReadRepository.GetByIdAsync(id);
+            if (post == null)
+                throw new Exception("Gönderi bulunamadı.");
+
+            if (post.Content == null)
+                throw new Exception("İçerik boş.");
+
+            return await _aiService.SummarizeTextAsync(post.Content);
         }
     }
 }
