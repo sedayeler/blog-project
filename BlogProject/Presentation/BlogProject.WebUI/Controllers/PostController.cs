@@ -1,10 +1,11 @@
 ﻿using BlogProject.Application.Features.Commands.Post.CreatePost;
 using BlogProject.Application.Features.Commands.Post.DeletePost;
-using BlogProject.Application.Features.Commands.Post.SummarizePost;
 using BlogProject.Application.Features.Commands.Post.UpdatePost;
 using BlogProject.Application.Features.Queries.Category.GetAllCategories;
 using BlogProject.Application.Features.Queries.Post.GetByIdPost;
 using BlogProject.Application.Features.Queries.Post.GetPostsByCategoryId;
+using BlogProject.Application.Features.Queries.Post.SearchPosts;
+using BlogProject.Application.Features.Queries.Post.SummarizePost;
 using BlogProject.WebUI.Models.Comment;
 using BlogProject.WebUI.Models.Post;
 using MediatR;
@@ -85,9 +86,9 @@ namespace BlogProject.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
         {
-            var response = await _mediator.Send(new GetByIdPostRequest() { Id = id });
+            var post = await _mediator.Send(new GetByIdPostRequest() { Id = id });
 
-            var commentsModel = response.Comments.Select(c => new ListCommentViewModel()
+            var commentsModel = post.Comments.Select(c => new ListCommentViewModel()
             {
                 Id = c.Id,
                 CreatedAt = c.CreatedAt,
@@ -98,18 +99,18 @@ namespace BlogProject.WebUI.Controllers
 
             ListPostViewModel model = new ListPostViewModel()
             {
-                Id = response.Id,
-                CreatedAt = response.CreatedAt,
-                Title = response.Title,
-                Content = response.Content,
-                ImagePath = response.ImagePath,
-                AuthorId = response.UserId,
-                AuthorName = response.UserName,
-                CategoryId = response.CategoryId,
-                CategoryName = response.CategoryName,
+                Id = post.Id,
+                CreatedAt = post.CreatedAt,
+                Title = post.Title,
+                Content = post.Content,
+                ImagePath = post.ImagePath,
+                AuthorId = post.UserId,
+                AuthorName = post.UserFullName,
+                CategoryId = post.CategoryId,
+                CategoryName = post.CategoryName,
                 NewComment = new CreateCommentViewModel()
                 {
-                    PostId = response.Id
+                    PostId = post.Id
                 },
                 Comments = commentsModel ?? new List<ListCommentViewModel>()
             };
@@ -131,15 +132,15 @@ namespace BlogProject.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
-            var response = await _mediator.Send(new GetByIdPostRequest { Id = id });
+            var post = await _mediator.Send(new GetByIdPostRequest { Id = id });
 
             UpdatePostViewModel model = new UpdatePostViewModel()
             {
-                Id = response.Id,
-                Title = response.Title,
-                Content = response.Content,
-                ImagePath = response.ImagePath,
-                CategoryId = response.CategoryId,
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                ImagePath = post.ImagePath,
+                CategoryId = post.CategoryId,
             };
 
             ViewBag.Categories = new SelectList(await _mediator.Send(new GetAllCategoriesQueryRequest()), "Id", "Name", model.CategoryId);
@@ -207,11 +208,38 @@ namespace BlogProject.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SummarizeWithAI([FromBody] SummarizePostCommandRequest request)
+        public async Task<IActionResult> Summarize([FromBody] GetPostSummaryQueryRequest request)
         {
-            var result = await _mediator.Send(request);
+            var response = await _mediator.Send(request);
 
-            return Json(new { summary = result.Summary });
+            return Json(new { summary = response.Summary });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Search(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return RedirectToAction("Index", "Home");
+
+            var posts = await _mediator.Send(new GetSearchPostsQueryRequest() { Keyword = keyword });
+
+            List<ListPostViewModel> model = posts
+                .Select(p => new ListPostViewModel()
+                {
+                    Id = p.Id,
+                    CreatedAt = p.CreatedAt,
+                    Title = p.Title,
+                    Content = p.Content.Length > 200 ? p.Content.Substring(0, 200) + "..." : p.Content,
+                    ImagePath = p.ImagePath,
+                    AuthorId = p.UserId,
+                    AuthorName = p.UserFullName,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.CategoryName
+                }).ToList();
+
+            ViewBag.SearchKeyword = keyword;
+
+            return View("~/Views/Home/Index.cshtml", model);
         }
     }
 }

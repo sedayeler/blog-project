@@ -1,22 +1,22 @@
 ﻿using BlogProject.Application.Abstractions.Services;
 using MediatR;
 
-namespace BlogProject.Application.Features.Queries.Post.GetAllPosts
+namespace BlogProject.Application.Features.Queries.Post.SearchPosts
 {
-    public class GetAllPostsQueryHandler : IRequestHandler<GetAllPostsQueryRequest, List<GetAllPostsQueryResponse>>
+    public class GetSearchPostsQueryHandler : IRequestHandler<GetSearchPostsQueryRequest, List<GetSearchPostsQueryResponse>>
     {
         private readonly IPostService _postService;
 
-        public GetAllPostsQueryHandler(IPostService postService)
+        public GetSearchPostsQueryHandler(IPostService postService)
         {
             _postService = postService;
         }
 
-        public async Task<List<GetAllPostsQueryResponse>> Handle(GetAllPostsQueryRequest request, CancellationToken cancellationToken)
+        public async Task<List<GetSearchPostsQueryResponse>> Handle(GetSearchPostsQueryRequest request, CancellationToken cancellationToken)
         {
-            var posts = await _postService.GetAllPostsAsync();
+            var posts = await _postService.GetSearchPostsAsync(request.Keyword);
 
-            return posts.Select(p => new GetAllPostsQueryResponse()
+            return posts.Select(p => new GetSearchPostsQueryResponse()
             {
                 Id = p.Id,
                 CreatedAt = p.CreatedAt,

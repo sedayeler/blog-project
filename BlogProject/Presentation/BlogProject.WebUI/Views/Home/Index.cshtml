@@ -1,10 +1,16 @@
 ﻿@model List<BlogProject.WebUI.Models.Post.ListPostViewModel>
 
 @{
-    ViewData["Title"] = ViewBag.CategoryName ?? "Ana Sayfa";
+    ViewData["Title"] = ViewBag.SearchKeyword != null
+        ? $"\"{ViewBag.SearchKeyword}\" için arama sonuçları"
+        : (ViewBag.CategoryName ?? "Ana Sayfa");
 }
 
-<h2 class="text-center fw-semibold mb-4">Gönderiler</h2>
+<h2 class="text-center fw-semibold mb-4">
+    @(ViewBag.SearchKeyword != null
+        ? $"\"{ViewBag.SearchKeyword}\" için arama sonuçları"
+        : "Gönderiler")
+</h2>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -12,7 +18,9 @@
         {
             <div class="col-12 text-center">
                 <div class="alert alert-dark fw-semibold">
-                    Bu kategoriye ait gönderi bulunamadı.
+                    @(ViewBag.SearchKeyword != null
+                        ? $"\"{ViewBag.SearchKeyword}\" için sonuç bulunamadı."
+                        : "Bu kategoriye ait gönderi bulunamadı.")
                 </div>
             </div>
         }

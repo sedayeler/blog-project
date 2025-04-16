@@ -10,6 +10,7 @@ namespace BlogProject.Application.Abstractions.Services
         Task<List<ListPostDto>> GetAllPostsAsync();
         Task<ListPostDto> GetByIdPostAsync(Guid id);
         Task<List<ListPostDto>> GetPostsByCategoryIdAsync(Guid categoryId);
-        Task<string> SummarizePostAsync(Guid id);
+        Task<string> GetPostSummaryAsync(Guid id);
+        Task<List<ListPostDto>> GetSearchPostsAsync(string keyword);
     }
 }

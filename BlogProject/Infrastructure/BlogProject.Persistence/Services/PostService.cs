@@ -153,7 +153,7 @@ namespace BlogProject.Persistence.Services
             if (posts == null)
                 throw new Exception("Gönderi bulunamadı.");
 
-            return posts.Select(p => new ListPostDto()
+            List<ListPostDto> postDtos = posts.Select(p => new ListPostDto()
             {
                 Id = p.Id,
                 CreatedAt = p.CreatedAt,
@@ -165,18 +165,44 @@ namespace BlogProject.Persistence.Services
                 CategoryId = p.CategoryId,
                 CategoryName = p.Category.Name
             }).ToList();
+
+            return postDtos;
         }
 
-        public async Task<string> SummarizePostAsync(Guid id)
+        public async Task<string> GetPostSummaryAsync(Guid id)
         {
             var post = await _postReadRepository.GetByIdAsync(id);
             if (post == null)
                 throw new Exception("Gönderi bulunamadı.");
 
             if (post.Content == null)
-                throw new Exception("İçerik boş.");
+                throw new Exception("Gönderi içeriği boş.");
 
             return await _aiService.SummarizeTextAsync(post.Content);
+        }
+
+        public async Task<List<ListPostDto>> GetSearchPostsAsync(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                throw new Exception("Aranacak kelime yok.");
+
+            keyword = keyword.ToLower();
+
+            return await _postReadRepository.GetAll()
+                .Where(p => p.Title.Contains(keyword) || p.Content.Contains(keyword) || p.User.FullName.Contains(keyword) || p.Category.Name.Contains(keyword))
+                .OrderByDescending(p => p.CreatedAt)
+                .Select(p => new ListPostDto()
+                {
+                    Id = p.Id,
+                    CreatedAt = p.CreatedAt,
+                    Title = p.Title,
+                    Content = p.Content,
+                    ImagePath = p.ImagePath,
+                    UserId = p.UserId,
+                    UserFullName = p.User.FullName,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category.Name
+                }).ToListAsync();
         }
     }
 }

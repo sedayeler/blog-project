@@ -10,7 +10,7 @@
         box.textContent = "AI özet hazırlanıyor...";
 
         try {
-            const response = await fetch('/Post/SummarizeWithAI', {
+            const response = await fetch('/Post/Summarize', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

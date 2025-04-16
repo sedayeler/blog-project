@@ -32,7 +32,7 @@ public class HomeController : Controller
                 Content = post.Content.Length > 200 ? post.Content.Substring(0, 200) + "..." : post.Content,
                 ImagePath = post.ImagePath,
                 AuthorId = post.UserId,
-                AuthorName = post.UserName,
+                AuthorName = post.UserFullName,
                 CategoryId = post.CategoryId,
                 CategoryName = post.CategoryName
             }).ToList();

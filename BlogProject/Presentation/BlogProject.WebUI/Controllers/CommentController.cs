@@ -37,7 +37,7 @@ namespace BlogProject.WebUI.Controllers
                     Content = post.Content,
                     ImagePath = post.ImagePath,
                     AuthorId = post.UserId,
-                    AuthorName = post.UserName,
+                    AuthorName = post.UserFullName, 
                     CategoryId = post.CategoryId,
                     CategoryName = post.CategoryName,
                     NewComment = model,

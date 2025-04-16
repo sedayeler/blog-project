@@ -1,6 +1,6 @@
-﻿namespace BlogProject.Application.Features.Queries.Post.GetAllPosts
+﻿namespace BlogProject.Application.Features.Queries.Post.SearchPosts
 {
-    public class GetAllPostsQueryResponse
+    public class GetSearchPostsQueryResponse
     {
         public Guid Id { get; set; }
         public DateTime CreatedAt { get; set; }

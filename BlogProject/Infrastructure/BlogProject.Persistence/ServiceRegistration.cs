@@ -49,9 +49,7 @@ namespace BlogProject.Persistence
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICommentService, CommentService>();
-            services.AddScoped<IAiService, AiService>();
-            services.AddHttpClient<IAiService, AiService>();
+            services.AddScoped<ICommentService, CommentService>();           
         }
     }
 }

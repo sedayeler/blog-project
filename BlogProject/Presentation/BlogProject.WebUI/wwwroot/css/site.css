@@ -22,7 +22,7 @@ body {
 }
 
 .btn-kayit-gonderi,
-.btn-giris-yap {
+.btn-white {
     padding: 8px 16px;
     font-size: 1rem;
     line-height: 1.5;
@@ -46,13 +46,13 @@ body {
         color: white;
     }
 
-.btn-giris-yap {
+.btn-white {
     background-color: transparent;
     color: #6f42c1;
     border: 2px solid #6f42c1;
 }
 
-    .btn-giris-yap:hover {
+    .btn-white:hover {
         background-color: #6f42c1;
         color: white;
     }

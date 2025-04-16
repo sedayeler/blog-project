@@ -11,7 +11,7 @@ namespace BlogProject.WebUI.Models.User
         public string Username { get; set; }
 
         [Required(ErrorMessage = "E-posta adresi gereklidir.")]
-        [EmailAddress(ErrorMessage = "Geçerli bir e-posta adresi giriniz.")]
+        [EmailAddress(ErrorMessage = "Lütfen geçerli bir e-posta adresi giriniz.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Bir şifre belirlemelisiniz.")]

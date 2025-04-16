@@ -24,7 +24,7 @@ namespace BlogProject.Application.Features.Queries.Post.GetByIdPost
                 Content = post.Content,
                 ImagePath = post.ImagePath,
                 UserId = post.UserId,
-                UserName = post.UserFullName,
+                UserFullName = post.UserFullName,
                 CategoryId = post.CategoryId,
                 CategoryName = post.CategoryName,
                 Comments = post.Comments
