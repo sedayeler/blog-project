@@ -5,6 +5,9 @@ using BlogProject.Persistence.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "7087";
+builder.WebHost.UseUrls($"http://*:{port}");
+
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
