@@ -59,3 +59,56 @@
 
 ###  Yorumlar Ekranı
 ![Image](https://github.com/user-attachments/assets/d1858cad-ced2-4ad0-8911-a453cd5e2386)
+
+## Kurulum (Installation)
+
+Aşağıdaki adımları takip ederek blog projesini kendi bilgisayarınızda çalıştırabilirsiniz:
+
+### 1. Reponun Klonlanması
+
+```bash
+git clone https://github.com/sedayeler/blog-project
+cd blog-project
+```
+
+### 2. Bağımlılıkların Kurulması
+
+```bash
+dotnet restore
+```
+
+### 3. Veritabanı Ayarları
+
+- `appsettings.json` dosyasını açın ve PostgreSQL bağlantı cümlesini kendi bilgilerinize göre güncelleyin:
+
+```json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Database=YorumSatiriDb;Username=postgres;Password=postgres"
+}
+```
+
+- Ardından veritabanını oluşturmak için migration'ları uygulayın:
+
+```bash
+dotnet ef database update
+```
+
+### 4. Uygulamayı Çalıştırma
+
+```bash
+dotnet run --project BlogProject.WebUI
+```
+
+### 5. Uygulamaya Erişim
+
+Uygulama başladıktan sonra tarayıcınızda aşağıdaki adresi açarak blog sitesini görüntüleyebilirsiniz:
+
+```
+http://localhost:7087
+```
+
+
+
+
+
+
