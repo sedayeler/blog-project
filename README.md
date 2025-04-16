@@ -36,4 +36,26 @@
 - Arama özelliği mevcuttur.
 - Yapay zeka ile gönderiler özetlenebilir.
 
+### Ana Sayfa
+![Image](https://github.com/user-attachments/assets/52fcb771-1cac-461a-a64b-8eb69ab1eb0e)
 
+### Kayıt Ol Ekranı
+![Image](https://github.com/user-attachments/assets/11161460-6a5a-4993-850f-09bffa962d1d)
+
+### Hoş Geldin E-Postası
+![Image](https://github.com/user-attachments/assets/19df0848-e914-4372-a4cc-fcee4df8cdde)
+
+### Giriş Ekranı
+![Image](https://github.com/user-attachments/assets/d33aaa2e-82af-43c2-b47e-f11414915eba)
+
+### Gönderi Oluşturma Sayfası
+![Image](https://github.com/user-attachments/assets/5092fa57-f420-4a0d-a51d-69618fd81ea6)
+
+### Kullanıcının kendi gönderisine ait detay sayfası
+![Image](https://github.com/user-attachments/assets/056ce825-4c59-4a0e-bc72-73382e129d4f)
+
+###  AI ile Gönderi Özeti
+![Image](https://github.com/user-attachments/assets/e8eee134-dd9e-4c1e-ad28-a8747100c3aa)
+
+###  Yorumlar Ekranı
+![Image](https://github.com/user-attachments/assets/d1858cad-ced2-4ad0-8911-a453cd5e2386)
