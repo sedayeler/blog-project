@@ -20,11 +20,26 @@ builder.Services.AddInfrastructureServices();
 
 var app = builder.Build();
 
+//using (var scope = app.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+//    await CategorySeeder.SeedAsync(services);
+//}
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    await CategorySeeder.SeedAsync(services);
+    try
+    {
+        await CategorySeeder.SeedAsync(services);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Veritabaný seed iþlemi baþarýsýz oldu:");
+        Console.WriteLine(ex.Message);
+    }
 }
+
 
 if (!app.Environment.IsDevelopment())
 {

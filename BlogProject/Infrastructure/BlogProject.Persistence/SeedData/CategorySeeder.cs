@@ -32,5 +32,4 @@ namespace BlogProject.Persistence.SeedData
             }
         }
     }
-
 }
