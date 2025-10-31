@@ -1,4 +1,4 @@
-﻿services:
+services:
   - type: web
     name: blog-project
     runtime: docker
@@ -17,6 +17,3 @@
 databases:
   - name: blogproject
     plan: free
-
-
-
