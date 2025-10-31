@@ -1,0 +1,22 @@
+﻿services:
+  - type: web
+    name: blog-project
+    runtime: docker
+    rootDir: Presentation/BlogProject.WebUI
+    buildCommand: "dotnet publish -c Release -o out"
+    startCommand: "dotnet out/BlogProject.WebUI.dll"
+    plan: free
+    envVars:
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: blogproject
+          property: connectionString
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+
+databases:
+  - name: blogproject
+    plan: free
+
+
+

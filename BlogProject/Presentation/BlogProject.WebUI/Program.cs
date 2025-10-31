@@ -5,9 +5,6 @@ using BlogProject.Persistence.SeedData;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "7087";
-builder.WebHost.UseUrls($"http://*:{port}");
-
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
@@ -23,12 +20,6 @@ builder.Services.AddInfrastructureServices();
 
 var app = builder.Build();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-//    await CategorySeeder.SeedAsync(services);
-//}
-
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -42,7 +33,6 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
-
 
 if (!app.Environment.IsDevelopment())
 {
