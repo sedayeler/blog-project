@@ -2,11 +2,13 @@
 
 **Yorum Satırı**, kullanıcıların blog gönderileri oluşturabildiği, yorum yapabildiği ve yapay zeka destekli özetleme özelliği ile içeriklere hızlıca göz atabildiği bir blog platformudur. Bu proje, .NET 8, Onion Architecture ve modern yazılım geliştirme yaklaşımlarıyla geliştirilmiştir.
 
+🔗 **Canlı Demo:** [Yorum Satırı - Live on Azure](https://yorumsatiri-emahbnc2hnc3bybz.westeurope-01.azurewebsites.net/)
+
 ## 🚀 Kullanılan Teknolojiler
 
 - ASP.NET Core MVC (.NET 8)
 - Onion Architecture
-- PostgreSQL
+- PostgreSQL 
 - Entity Framework Core
 - SOLID Prensipleri
 - Dependency Injection & Generic Repository Pattern
@@ -17,7 +19,10 @@
 - Gemini API (Yapay Zeka ile özetleme)
 - Razor Pages
 - Bootstrap 5
-- LibMan 
+- LibMan
+- GitHub Actions (CI/CD)
+- Azure Web App (Deployment)
+- Render (Database Hosting)
 
 ## 🔑 Özellikler
 
@@ -35,6 +40,12 @@
 - Gönderiler kategorilere göre filtrelenebilir.
 - Arama özelliği mevcuttur.
 - Yapay zeka ile gönderiler özetlenebilir.
+
+## ☁️ Deployment ve CI/CD
+
+- Proje **Azure Web App** üzerinde deploy edilmiştir.  
+- Veritabanı olarak **Render PostgreSQL** servisi kullanılmaktadır.  
+- **GitHub Actions** ile CI/CD süreci sağlanmıştır; main branch’e yapılan her push sonrası otomatik build ve deploy gerçekleşir.
 
 ### Ana Sayfa
 ![Image](https://github.com/user-attachments/assets/52fcb771-1cac-461a-a64b-8eb69ab1eb0e)
@@ -104,11 +115,5 @@ dotnet run --project BlogProject.WebUI
 Uygulama başladıktan sonra tarayıcınızda aşağıdaki adresi açarak blog sitesini görüntüleyebilirsiniz:
 
 ```
-http://localhost:7087
+https://localhost:7087
 ```
-
-
-
-
-
-
