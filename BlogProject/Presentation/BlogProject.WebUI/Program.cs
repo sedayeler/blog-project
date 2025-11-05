@@ -6,7 +6,7 @@ using BlogProject.Persistence.SeedData;
 var builder = WebApplication.CreateBuilder(args);
 
 var port = Environment.GetEnvironmentVariable("PORT") ?? "7087";
-builder.WebHost.UseUrls($"http://*:{port}");
+builder.WebHost.UseUrls($"https://*:{port}");
 
 builder.Services.AddRouting(options =>
 {
@@ -42,7 +42,6 @@ using (var scope = app.Services.CreateScope())
         Console.WriteLine(ex.Message);
     }
 }
-
 
 if (!app.Environment.IsDevelopment())
 {

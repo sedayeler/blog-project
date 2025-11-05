@@ -35,7 +35,7 @@ namespace BlogProject.Persistence.Services
             var requestContent = new StringContent(requestJson, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(
-                $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={_apiKey}", requestContent);
+                $"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={_apiKey}", requestContent);
 
             var responseString = await response.Content.ReadAsStringAsync();
 
